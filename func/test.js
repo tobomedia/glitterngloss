@@ -1,24 +1,28 @@
-var pdf = require("html-pdf");
-
-// exports.handler = async () => {
-//   const document = pdf.create("<h1>the document</h1>");
-//   return {
-//     statusCode: 200,
-//     body: document,
-//   };
-// };
+const pdf = require("html-pdf");
 
 exports.handler = (event, context, callback) => {
-  const docDefinition = pdf.create("<h1>test document</h1>");
-  getBlob(docDefinition).then((blob) => {
-    callback(null, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/pdf",
-      },
-      statusCode: 200,
-      body: blob.toString("base64"),
-      isBase64Encoded: true,
-    });
-  });
+  try {
+    pdf
+      .create("<html><body><h1>HELLO PDF</h1></body></html>", {
+        format: "Letter",
+        orientation: "portrait",
+        border: "1in",
+      })
+      .toBuffer((err, buffer) => {
+        console.log("callback triggered");
+        return {
+          statusCode: 200,
+          headers: {
+            "Cache-Control": "no-cache",
+            "Content-Type": "application/pdf",
+          },
+          body: buffer.toString(),
+        };
+      });
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: err.toString(),
+    };
+  }
 };
