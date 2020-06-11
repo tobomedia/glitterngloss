@@ -1,15 +1,20 @@
 {
   "dependencies": {
+    "netlify-lambda": "^1.6.3",
     "next": "^9.4.4",
     "pdfkit": "^0.11.0",
+    "pdfkit-next": "^0.10.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "styled-components": "^5.1.1"
+    "styled-components": "^5.1.1",
+    "svg-to-pdfkit": "^0.1.8"
   },
   "scripts": {
     "dev": "next -p 4000",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "function:serve": "netlify-lambda serve func",
+    "function:build": "netlify-lambda build func"
   },
   "devDependencies": {
     "babel-plugin-styled-components": "^1.10.7"

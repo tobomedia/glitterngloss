@@ -1,9 +1,9 @@
-const PDFDocument = require("pdfkit");
-const logo = require("../public/gnglogo.png");
+const PDFDocument = require("pdfkit-next");
+const fs = require("fs");
 
 exports.handler = async (event, context) => {
   const subject = event.queryStringParameters.name || "World";
-
+  const logo = fs.readFileSync(require.resolve("./gnglogo.png"));
   const pdfBuffer = await new Promise((resolve) => {
     const doc = new PDFDocument({ size: [595, 280] });
 
@@ -20,6 +20,7 @@ exports.handler = async (event, context) => {
       .fill("grey");
 
     doc.image(logo);
+
     doc.end();
 
     const buffers = [];
